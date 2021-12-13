@@ -9,6 +9,8 @@ pandas = "*"
 numpy = "*"
 black = "*"
 flake8 = "*"
+requests = "*"
+google-cloud-storage = "*"
 
 [dev-packages]
 
