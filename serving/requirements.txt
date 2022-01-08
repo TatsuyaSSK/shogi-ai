@@ -1,0 +1,4 @@
+numpy
+cshogi
+google-cloud-storage==1.44.0
+flask
