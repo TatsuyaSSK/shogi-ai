@@ -1,6 +1,7 @@
 import os
 import re
-from urllib import error, request
+from typing import List
+from urllib import error, request, response
 
 
 def check_input_text(text: str) -> str:
@@ -30,7 +31,8 @@ def check_input_text(text: str) -> str:
         raise ValueError("URLを入力してください")
 
     # チェック項目13
-    if (extention := os.path.splitext(text)[1]) != ".csa":
+    extention = os.path.splitext(text)[1]
+    if extention != ".csa":
         raise ValueError("csa形式のファイルを入力してください")
 
     # チェック項目14
@@ -41,3 +43,17 @@ def check_input_text(text: str) -> str:
         raise ValueError("csaファイルの存在が確認できませんでした")
 
     return text
+
+
+def get_player_names(csa_file_url):
+
+    csa_response = request.urlopen(csa_file_url)
+    content = csa_response.readlines()
+
+    first_player_line = str(content[1])
+    first_player_name = re.search("(?<=\+).*(?=\()", first_player_line).group()
+
+    second_player_line = str(content[2])
+    second_player_name = re.search("(?<=\-).*(?=\()", second_player_line).group()
+
+    return first_player_name, second_player_name
